@@ -28,26 +28,21 @@ h3 {
   height: 100vh;
   display: flex;
 }
-#blurBox{
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10;
-}
+
 #blur {
   position: absolute; 
   top: 0;
   left: 0;
-  filter: blur(15px);
-  z-index: 5;
+  backdrop-filter: blur(15px);
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
 }
-#blurBox h1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 10;
-  transform: translate(-50%, -50%);
+#blur h1 {
+  z-index: -10;
 }
+
+
 /* listArea part ---------------- */
 #listArea {
   width: 70vw;
@@ -74,6 +69,7 @@ h3 {
   width: 30vw;
   height: 100vh;
   background-color: aqua;
+  text-align: center;
 }
 #fixedArea > div {
   width: 100%;
