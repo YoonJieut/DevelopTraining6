@@ -60,20 +60,18 @@ for(let i=0; i<_sellData.length; i++){
   for(let j=0; j<3; j++){
     ulTag.children[i].appendChild(document.createElement('div'));
   }
-
-  // let liTag = document.querySelectorAll('#listPart li');
-  // console.log(liTag);
-
-  // for(let k=0; k<3;k++){
-  //   let divCreate = document.createElement('div');
-  //   liTag[i].appendChild(divCreate);
-  // }
 }
+  // ? queryselector가 잘 안됐다. 흠..
 
-  // // li 안에 div 생성기
-  // function divCreate(){
-  //   for(let k = 0; k<3; k++){
-  //     let divCreate = document.createElement('div');
-  //     liTag[k].appendChild(divCreate);
-  //   }
-  // }
+// _sellData 배열의 정보를 li안의 div에 넣기
+//  * 1번 div는 img
+//  * 2번 div는 price
+//  * 3번 div는 id
+console.log(ulTag.children[0])
+console.log(ulTag.children[0].children[0])
+console.log(ulTag.children[0].children[1])
+console.log(ulTag.children[0].children[2])
+
+ulTag.children[0].children[0].textContent = _sellData[0].img
+ulTag.children[0].children[1].textContent = _sellData[0].price
+ulTag.children[0].children[2].textContent = _sellData[0].id
