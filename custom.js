@@ -16,7 +16,7 @@ function blurEventEnd(){
 }
 
 
-// li 자동 생성기 ---------------------------
+// li 자동 생성기 ------------------------------------------------
 const listPart = document.getElementById('listPart');
 const listData =[];
 const imgData = ["🤷‍♂️","🤷‍♀️","🤦‍♂️","🤦‍♀️","🙌","👍","😁","💕","😘","😒","❤","😊","😂","🤣","🤢","👌","🎁","💖","✔"];
@@ -42,6 +42,7 @@ const _sellData = [];
 // }
 // ! push관련 오류 발견
 
+// ! foreach로 데이터 배열 생성 !! ---------
 imgData.forEach((i)=>{
   _sellData.push(new testObj(i, imgData[i], priceData[i]))
 })
@@ -50,8 +51,29 @@ imgData.forEach((i)=>{
 // console.log(_sellData[0].id);
 
 
-  // li ul 안에 넣기
+  // li안에 넣기
+const ulTag = document.getElementById('listPart')
+// console.log(ulTag);
 for(let i=0; i<_sellData.length; i++){
   let liCreate = document.createElement('li')
   listPart.appendChild(liCreate);
+  for(let j=0; j<3; j++){
+    ulTag.children[i].appendChild(document.createElement('div'));
+  }
+
+  // let liTag = document.querySelectorAll('#listPart li');
+  // console.log(liTag);
+
+  // for(let k=0; k<3;k++){
+  //   let divCreate = document.createElement('div');
+  //   liTag[i].appendChild(divCreate);
+  // }
 }
+
+  // // li 안에 div 생성기
+  // function divCreate(){
+  //   for(let k = 0; k<3; k++){
+  //     let divCreate = document.createElement('div');
+  //     liTag[k].appendChild(divCreate);
+  //   }
+  // }
