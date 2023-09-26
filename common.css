@@ -1,0 +1,60 @@
+*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+li {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+h3 {
+  font-size: 2em;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+/* listArea part ---------------- */
+#listArea {
+  width: 70vw;
+  height: 100vh;
+  padding: 3vw;
+}
+#listArea > ul {
+  outline: 1px solid black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap : 1vw;
+  overflow: hidden;
+}
+#listArea > ul li {
+  outline: 1px solid black;
+  width: 15vw;
+  height: 15vw;
+}
+
+/* fixedArea part ---------------------- */
+#fixedArea {
+  width: 30vw;
+  height: 100vh;
+  background-color: aqua;
+}
+#fixedArea > div {
+  width: 100%;
+  height: 20vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
