@@ -79,9 +79,9 @@ for(let i=0; i<_sellData.length; i++){
 // console.log(ulTag.children[0].children[0])
 // console.log(ulTag.children[0].children[1])
 // console.log(ulTag.children[0].children[2])
-ulTag.children[0].children[0].innerText = _sellData[0].img
-ulTag.children[0].children[1].innerText = _sellData[0].price
-ulTag.children[0].children[2].textContent = _sellData[0].id
+// ulTag.children[0].children[0].innerText = _sellData[0].img
+// ulTag.children[0].children[1].innerText = _sellData[0].price
+// ulTag.children[0].children[2].textContent = _sellData[0].id
 
 
 for(let i =0; i<_sellData.length; i++){
@@ -91,6 +91,23 @@ for(let i =0; i<_sellData.length; i++){
 }
 // ? 여기서 더 개선할 수 있을까???
 
+//!!---------버튼 상호작용-----------------
 
 
+ulTag.addEventListener('click',function(event){
+  console.dir(event)
+  targetBgColor(event);
+});
 
+// 타겟의 스타일 조건문
+function targetBgColor(event){
+  if(event.target === "div" || event.target === "li"){
+    if(event.target.parentElement.style.backgroundColor === ""){
+      event.target.parentElement.style.backgroundColor = "gray";
+    }else {
+      event.target.parentElement.style.backgroundColor = "";
+    }
+  } else {
+    console.error("항목을 바르게 선택해주세요")
+  }
+}
