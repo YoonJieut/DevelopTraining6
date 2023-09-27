@@ -5,26 +5,16 @@ const blurDiv = document.getElementById('blur');
 const blurH1 = document.querySelector('h1');
 
 
-// 블러 이벤트 -------
-function blurEvent(){
-  blurDiv.style.zIndex = "5";
-  blurH1.textContent = "asdasd";
-}
-function blurEventEnd(){
-  blurDiv.style.zIndex = "-5";
-  blurH1.textContent = "";
-}
 
-
-// li 자동 생성기 ------------------------------------------------
-
-// 여기서 수정하면  리스트가 생성됨
+// !! 원본 데이터 수정파트 --------------
+//* 여기서 수정하면  리스트가 생성됨
 const listPart = document.getElementById('listPart');
 const imgData = ["🤷‍♂️","🤷‍♀️","🤦‍♂️","🤦‍♀️","🙌","👍","😁","💕","😘","😒","❤","😊","😂","🤣","🤢","👌","🎁","💖","✔","✌"];
 const priceData = [300,3000,400,4000,200,2000,500,5000,600,6000,700,7000,800,8000,900,9000,100,1000,405,40000];
 
 
 
+// !li 자동 생성기 ------------------------------------------------
 // * class 선언---------------------------
 class testObj {
   constructor (id, img, price ){
@@ -39,7 +29,9 @@ class testObj {
 // console.log(imgData);
 // console.log(priceData);
 
+// * 원본데이터를 토대로 객체 자동 생성하기 ---------------
 const _sellData = [];
+
 for(let i = 0; i<imgData.length;i++){
   _sellData.push(new testObj(i+1, imgData[i],priceData[i]));
 }
@@ -55,9 +47,8 @@ for(let i = 0; i<imgData.length;i++){
 // console.log(_sellData[0].id);
 
 
-  // li안에 넣기
+//* li안에 넣기
 const ulTag = document.getElementById('listPart')
-// console.log(ulTag);
 for(let i=0; i<_sellData.length; i++){
   let liCreate = document.createElement('li')
   listPart.appendChild(liCreate);
@@ -131,19 +122,20 @@ const userInput = document.getElementById('userInput');
 //? target = 실제 이벤트 발생 요소
 
 
-// * 다중 선택된 것의 price를 가져오기
 
 // * 배경색이 "gray"라면 string으로 currentPrice에 값을 넣고 각 값음 함침
 // * return값은 number
 function pushCPrice(){
   let currentPrice = [];
   let result = 0;
-
+  
+  // * 다중 선택된 것의 price를 가져오기
   for(let i=0; i<listPart.children.length; i++){
     if(listPart.children[i].style.backgroundColor === "gray"){
       currentPrice.push(parseInt(listPart.children[i].children[1].textContent));
     }
   }
+
   // *currentPrice에 값들을 합치기
   for(let i=0; i<currentPrice.length; i++){
     result += currentPrice[i];
@@ -156,27 +148,47 @@ function pushCPrice(){
 
 
 
-// ! submitBtn을 누르면 이벤트 발생
-function submitBtnFunc(){
-  submitBtn[0].addEventListener('click',function(){
-    let userValue = parseInt(userInput.value);
-    if(userValue >= pushCPrice()){
-      if(userValue === pushCPrice()){
-        console.log('잔돈이 없습니다.')
-        console.log(userValue, pushCPrice())
-      }else{
-        // 잔돈 로직 시작
-        console.log('잔돈이 있습니다ㅇㅇㅇ')
-        console.log(userValue - pushCPrice()+ "원 잔돈")
-      }
-    } else {
-      console.error("돈이 부족합니다.")
-    }
-  });
-}
-submitBtnFunc();
 
+//! 잔돈 비교 로직 ----------------------  
+//??? 해야할 것 : 잔돈 버튼 생성 및 
+function submitBtnFunc(){
+  let userValue = parseInt(userInput.value);
+  if(userValue >= pushCPrice()){
+    if(userValue === pushCPrice()){
+      blurEvent("잔돈이 없습니다.");
+      blurEventEnd();
+    }else{
+      // 잔돈 로직 시작
+      blurEvent(`${userValue - pushCPrice()} 원 잔돈이 있음`);
+      blurEventEnd();
+    }
+  } else {
+    blurEvent("돈이 부족합니다.");
+    blurEventEnd();
+  }
+};
+
+
+// * submitBtn을 누르면 이벤트 발생
+submitBtn[0].addEventListener('click',function(){
+  submitBtnFunc();
+});
 // * input + enter 해도, 작동하게 하기
 userInput.addEventListener('change',function(){
-  // submitBtnFunc();
-})
+  submitBtnFunc();
+});
+
+
+
+// * 블러 이벤트 -------
+function blurEvent(text){
+  blurDiv.style.zIndex = "5";
+  blurH1.textContent = `${text}`;
+}
+// * blurDiv를 누르면 blurEvent 끝내기
+function blurEventEnd(){
+  blurDiv.addEventListener('click',function(){
+    blurDiv.style.zIndex = " -5";
+    blurH1.textContent = "";
+  });
+}
