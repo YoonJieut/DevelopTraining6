@@ -81,32 +81,22 @@ for(let i=0; i<_sellData.length; i++){
 // console.log(ulTag.children[0].children[2])
 // ulTag.children[0].children[0].innerText = _sellData[0].img
 // ulTag.children[0].children[1].innerText = _sellData[0].price
-// ulTag.children[0].children[2].textContent = _sellData[0].id
-
-
+// ulTag.children[0].children[2].textContent = _sellData[0]
 for(let i =0; i<_sellData.length; i++){
     ulTag.children[i].children[0].innerText = _sellData[i].img
     ulTag.children[i].children[1].innerText = _sellData[i].price
     ulTag.children[i].children[2].innerText = _sellData[i].id
 }
 // ? 여기서 더 개선할 수 있을까???
-let currentPrice = [];
-//!!--------- 다중 선택 로직 -----------------
+
+//!!--------- li클릭 시 배경 변경 -----------------
 ulTag.addEventListener('click',function(event){
   console.dir(event)
   if(event.target.nodeName === "LI"){
-    let li_price = event.currentTarget.children[0].children[1].textContent;
     targetBgColor(event); 
-    console.log(li_price)
-    currentPrice.push(li_price); 
-    return console.log(currentPrice);
   }
   if(event.target.nodeName === "DIV"){
-    let li_price = event.currentTarget.children[0].children[1].textContent;
     pTargetBgColor(event); 
-    console.log(li_price)
-    currentPrice.push(li_price); 
-    return console.log(currentPrice);
   }
   else {
     console.error('올바른 아이템을 선택해주세요');
@@ -139,19 +129,43 @@ const userInput = document.getElementById('userInput');
 //? currentTarget 과 target의 차이는?
 //? currentTarget = 이벤트리스터가 달린 요소
 //? target = 실제 이벤트 발생 요소
+
+
 // * 다중 선택된 것의 price를 가져오기
 
+// * 배경색이 "gray"라면 string으로 currentPrice에 값을 넣고 각 값음 함침
+// * return값은 number
+function pushCPrice(){
+  let currentPrice = [];
+  let result = 0;
 
-// submitBtn을 누르면 이벤트 발생
-submitBtn[0].addEventListener('click',function(){
-  if( userInput.value    ){
-
-  }else{
-
+  for(let i=0; i<listPart.children.length; i++){
+    if(listPart.children[i].style.backgroundColor === "gray"){
+      currentPrice.push(parseInt(listPart.children[i].children[1].textContent));
+    }
   }
-  
+  // *currentPrice에 값들을 합치기
+  for(let i=0; i<currentPrice.length; i++){
+    result += currentPrice[i];
+  };
+  return result;
+}
+
+
+
+
+
+
+// ! submitBtn을 누르면 이벤트 발생
+submitBtn[0].addEventListener('click',function(){
+  if(userInput.value > pushCPrice()){
+    console.log("구매했읍");
+  } else {
+    console.error("돈이 부족합니다.")
+  }
 });
 
+// * test용 change
 userInput.addEventListener('change',function(){
   console.log(userInput.value);
 })
