@@ -90,24 +90,68 @@ for(let i =0; i<_sellData.length; i++){
     ulTag.children[i].children[2].innerText = _sellData[i].id
 }
 // ? 여기서 더 개선할 수 있을까???
-
-//!!---------버튼 상호작용-----------------
-
-
+let currentPrice = [];
+//!!--------- 다중 선택 로직 -----------------
 ulTag.addEventListener('click',function(event){
   console.dir(event)
-  targetBgColor(event);
+  if(event.target.nodeName === "LI"){
+    let li_price = event.currentTarget.children[0].children[1].textContent;
+    targetBgColor(event); 
+    console.log(li_price)
+    currentPrice.push(li_price); 
+    return console.log(currentPrice);
+  }
+  if(event.target.nodeName === "DIV"){
+    let li_price = event.currentTarget.children[0].children[1].textContent;
+    pTargetBgColor(event); 
+    console.log(li_price)
+    currentPrice.push(li_price); 
+    return console.log(currentPrice);
+  }
+  else {
+    console.error('올바른 아이템을 선택해주세요');
+  }
 });
 
-// 타겟의 스타일 조건문
-function targetBgColor(event){
-  if(event.target === "div" || event.target === "li"){
+  // 타겟의 부모 스타일 조건문
+  function pTargetBgColor(event){
     if(event.target.parentElement.style.backgroundColor === ""){
       event.target.parentElement.style.backgroundColor = "gray";
     }else {
       event.target.parentElement.style.backgroundColor = "";
     }
-  } else {
-    console.error("항목을 바르게 선택해주세요")
   }
-}
+  // 타겟의 스타일 조건문
+  function targetBgColor(event){
+    if(event.target.style.backgroundColor === ""){
+      event.target.style.backgroundColor = "gray";
+    }else {
+      event.target.style.backgroundColor = "";
+    }
+  }
+
+// !--------버튼 로직-------------------------
+
+const submitBtn = document.getElementsByClassName('submitBtn');
+const userInput = document.getElementById('userInput');
+// console.log(submitBtn, userInput);
+
+//? currentTarget 과 target의 차이는?
+//? currentTarget = 이벤트리스터가 달린 요소
+//? target = 실제 이벤트 발생 요소
+// * 다중 선택된 것의 price를 가져오기
+
+
+// submitBtn을 누르면 이벤트 발생
+submitBtn[0].addEventListener('click',function(){
+  if( userInput.value    ){
+
+  }else{
+
+  }
+  
+});
+
+userInput.addEventListener('change',function(){
+  console.log(userInput.value);
+})
