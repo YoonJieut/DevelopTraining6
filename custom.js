@@ -157,15 +157,26 @@ function pushCPrice(){
 
 
 // ! submitBtn을 누르면 이벤트 발생
-submitBtn[0].addEventListener('click',function(){
-  if(userInput.value > pushCPrice()){
-    console.log("구매했읍");
-  } else {
-    console.error("돈이 부족합니다.")
-  }
-});
+function submitBtnFunc(){
+  submitBtn[0].addEventListener('click',function(){
+    let userValue = parseInt(userInput.value);
+    if(userValue >= pushCPrice()){
+      if(userValue === pushCPrice()){
+        console.log('잔돈이 없습니다.')
+        console.log(userValue, pushCPrice())
+      }else{
+        // 잔돈 로직 시작
+        console.log('잔돈이 있습니다ㅇㅇㅇ')
+        console.log(userValue - pushCPrice()+ "원 잔돈")
+      }
+    } else {
+      console.error("돈이 부족합니다.")
+    }
+  });
+}
+submitBtnFunc();
 
-// * test용 change
+// * input + enter 해도, 작동하게 하기
 userInput.addEventListener('change',function(){
-  console.log(userInput.value);
+  // submitBtnFunc();
 })
