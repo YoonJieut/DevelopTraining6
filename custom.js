@@ -169,23 +169,6 @@ function submitBtnFunc(){
 };
 
 
-// * submitBtn을 누르면 이벤트 발생
-submitBtn[0].addEventListener('click',function(){
-  submitBtnFunc();
-});
-// * input + enter 해도, 작동하게 하기
-userInput.addEventListener('change',function(){
-  submitBtnFunc();
-});
-userInput.addEventListener('keyup',function(e){
-  if(e.key === "Enter"){
-    submitBtnFunc();
-  }
-});
-
-
-
-
 // * 블러 이벤트 -------
 function blurEvent(text){
   blurDiv.style.zIndex = "5";
@@ -195,6 +178,7 @@ function blurEvent(text){
 // ! enter 키 이벤트 등록하기 :
 //! keyup과 매개변수를 이용한다.
 const body = window.document.body;
+
 function blurEventEnd(){
   blurDiv.addEventListener('click',function(){
     blurDiv.style.zIndex = " -5";
@@ -202,21 +186,19 @@ function blurEventEnd(){
   });
   // ! body에 enter event를 넣었으나 1초만에 바로 사라지는 모습이 관측됨.
   // * setTimeout 0.8초 지연과 해당 이벤트를 한번만 작동하게 하는 것으로 해당 문제를 해결
-  setTimeout(()=>{
-    body.addEventListener('keyup', function(e){
-      if(e.key === "Enter" && blurDiv.style.zIndex === "5"){
-        blurDiv.style.zIndex = " -5";
+  body.addEventListener('keypress', function(e){
+    if(e.key === "Enter" && blurDiv.style.zIndex === "5"){
+      setTimeout(()=>{
+      blurDiv.style.zIndex = " -5";
         blurH1.textContent = "";
-        
-        body.removeEventListener('keyup',arguments.callee)
-      }
-    })
-  }, 800)
+      }, 500);
+    }
+  });
 }
 
 
 //??? input 조건 생성 : 만약 값이 없다면 작동하지 않도록
-userInput.addEventListener('input', function(){
+userInput.addEventListener('change', function(){
   // 입력이 있을 때 이벤트가 발생
   if(userInput.value.length > 0) {
     if(isNaN(userInput.value)===true){
@@ -225,9 +207,23 @@ userInput.addEventListener('input', function(){
       return;
     } else {
       userInput.placeholder = "값을 입력하셨습니다.";
+      // * submitBtn을 누르면 이벤트 발생
+      submitBtn[0].addEventListener('click',function(){
+        submitBtnFunc();
+      });
+      // * input + enter작동하게 하기, 중복 이벤트 등록 
+      userInput.addEventListener('change',function(){
+        submitBtnFunc();
+      });
+      userInput.addEventListener('keyup',function(e){
+        if(e.key === "Enter"){
+          submitBtnFunc();
+        }
+      });
+
     }
   } else {
-    console.alert("값을 입력해주세요")
+    alert("값을 입력해주세요")
   }
 })
 
