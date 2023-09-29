@@ -201,14 +201,17 @@ function blurEventEnd(){
     blurH1.textContent = "";
   });
   // ! body에 enter event를 넣었으나 1초만에 바로 사라지는 모습이 관측됨.
-  // body.addEventListener('keyup', function(e){
-  //   if(e.key === "Enter" && blurDiv.style.zIndex === "5"){
-  //     blurDiv.style.zIndex = " -5";
-  //     blurH1.textContent = "";
-  //     body.removeEventListener('keyup',arguments.callee)
-  //   }
-  // })
-  
+  // * setTimeout 0.8초 지연과 해당 이벤트를 한번만 작동하게 하는 것으로 해당 문제를 해결
+  setTimeout(()=>{
+    body.addEventListener('keyup', function(e){
+      if(e.key === "Enter" && blurDiv.style.zIndex === "5"){
+        blurDiv.style.zIndex = " -5";
+        blurH1.textContent = "";
+        
+        body.removeEventListener('keyup',arguments.callee)
+      }
+    })
+  }, 800)
 }
 
 
@@ -224,7 +227,7 @@ userInput.addEventListener('input', function(){
       userInput.placeholder = "값을 입력하셨습니다.";
     }
   } else {
-    userInput.placeholder = "값을 입력해주세요";
+    console.alert("값을 입력해주세요")
   }
 })
 
