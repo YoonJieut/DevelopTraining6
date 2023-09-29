@@ -118,8 +118,8 @@ const userInput = document.getElementById('userInput');
 // console.log(submitBtn, userInput);
 
 //? currentTarget 과 target의 차이는?
-//? currentTarget = 이벤트리스터가 달린 요소
-//? target = 실제 이벤트 발생 요소
+//* currentTarget = 이벤트리스터가 달린 요소
+//* target = 실제 이벤트 발생 요소
 
 
 
@@ -150,7 +150,7 @@ function pushCPrice(){
 
 
 //! 잔돈 비교 로직 ----------------------  
- 
+
 function submitBtnFunc(){
   let userValue = parseInt(userInput.value);
   if(userValue >= pushCPrice()){
@@ -177,6 +177,12 @@ submitBtn[0].addEventListener('click',function(){
 userInput.addEventListener('change',function(){
   submitBtnFunc();
 });
+userInput.addEventListener('keyup',function(e){
+  if(e.key === "Enter"){
+    submitBtnFunc();
+  }
+});
+
 
 
 
@@ -186,14 +192,40 @@ function blurEvent(text){
   blurH1.textContent = `${text}`;
 }
 // * blurDiv를 누르면 blurEvent 끝내기
+// ! enter 키 이벤트 등록하기 :
+//! keyup과 매개변수를 이용한다.
+const body = window.document.body;
 function blurEventEnd(){
   blurDiv.addEventListener('click',function(){
     blurDiv.style.zIndex = " -5";
     blurH1.textContent = "";
   });
+  // ! body에 enter event를 넣었으나 1초만에 바로 사라지는 모습이 관측됨.
+  // body.addEventListener('keyup', function(e){
+  //   if(e.key === "Enter" && blurDiv.style.zIndex === "5"){
+  //     blurDiv.style.zIndex = " -5";
+  //     blurH1.textContent = "";
+  //     body.removeEventListener('keyup',arguments.callee)
+  //   }
+  // })
+  
 }
 
 
-//??? 해야할 것 : 잔돈 버튼 생성
 //??? input 조건 생성 : 만약 값이 없다면 작동하지 않도록
+userInput.addEventListener('input', function(){
+  // 입력이 있을 때 이벤트가 발생
+  if(userInput.value.length > 0) {
+    if(isNaN(userInput.value)===true){
+      // 숫자로 변환 가능한지 여부 확인
+      userInput.placeholder = "숫자만 입력해주세요";
+      return;
+    } else {
+      userInput.placeholder = "값을 입력하셨습니다.";
+    }
+  } else {
+    userInput.placeholder = "값을 입력해주세요";
+  }
+})
 
+//??? 해야할 것 : 잔돈 버튼 생성
