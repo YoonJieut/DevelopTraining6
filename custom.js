@@ -262,43 +262,11 @@ function blurEventEnd(){
   });
 }
 
-
-
-// * 잔돈 이벤트
-function changeBtnEvent(e){
-  blurDiv.style.zIndex = "5";
-  blurH1.textContent = `${nowImg()}을(를) 획득했습니다.`;
-  chaBtnAdd(e);
-  
-}
-// ! 잔돈 동적 버튼 생성과 삭제
-function chaBtnAdd(){
-  let createDiv = document.createElement('div');
-  createDiv.className = "btn";
-  createDiv.textContent = "잔돈!";
-  blurDiv.appendChild(createDiv);
-
-    createDiv.addEventListener('click', function(){
-      chaBtnRemove();
-      blurDiv.style.zIndex = "5";
-    });
-}
-
-function chaBtnRemove(){
-  console.log(blurDiv.lastChild);
-  blurDiv.remove(blurDiv.lastChild);
-}
-
-function changeEvent(){
-  const userValue1 = parseInt(userInput.value);
-blurH1.textContent = `${userValue1 - pushCPrice()} 원 잔돈이 있습니다.`;
-
-setTimeout(()=>{
-  blurEventEnd();
-},500)
-}
-
-
-
-
 //??? 해야할 것 : 잔돈 버튼 생성
+function changeBtnEvent(e){
+  let userValue1 = parseInt(userInput.value);
+  blurEvent(`${userValue1 - pushCPrice()}원 잔돈입니다.`);
+  userInput.value = "";
+  blurEventEnd();
+};
+
