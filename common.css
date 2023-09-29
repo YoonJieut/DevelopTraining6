@@ -29,13 +29,14 @@ h3 {
 
 .scrollBar::-webkit-scrollbar-thumb {
   height: 100px; /* 스크롤바의 길이 */
-  background: #303843af; /* 스크롤바의 색상 */
+  background: #51596455; /* 스크롤바의 색상 */
   border-radius: 10px;
 }
 
 .scrollBar::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);  /*스크롤바 뒷 배경 색상*/
 }
+
 
 .flex {
   display: flex;
@@ -52,12 +53,16 @@ h3 {
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
 }
 .btn:hover {
   color :#fff;
   background-color: #555;
   font-weight: 300;
 }
+
+
 input {
   max-width: 80%;
   text-align: center;
@@ -70,6 +75,8 @@ input {
 input::placeholder {
   color: #999999ad;
 }
+
+
 #root {
   width: 100vw;
   height: 100vh;
@@ -84,6 +91,7 @@ input::placeholder {
   width: 100vw;
   height: 100vh;
   z-index: -1;
+  flex-direction: column;
 }
 #blur h1 {
   z-index: -10;
@@ -98,7 +106,7 @@ input::placeholder {
   
 }
 #listArea > ul {
-  outline: 1px solid black;
+  
   padding-right: 5px;
   width: 100%;
   height: 100%;
@@ -110,7 +118,7 @@ input::placeholder {
 }
 
 #listArea > ul li {
-  outline: 1px solid black;
+  
   width: 15vw;
   height: 15vw;
   border-radius: 2px;

@@ -127,24 +127,60 @@ function pushCPrice(){
   let result = 0;
   
   // * 다중 선택된 것의 price를 가져오기
-  //* 선택됐을 때 price(div[1])의 텍스트가 흰색으로 변함
+
   for(let i=0; i<listPart.children.length; i++){
     if(listPart.children[i].style.backgroundColor === "gray"){
       currentPrice.push(parseInt(listPart.children[i].children[1].textContent));
       
     }
   }
-
+  
   // *currentPrice에 값들을 합치기
   for(let i=0; i<currentPrice.length; i++){
     result += currentPrice[i];
   };
   return result;
 }
+//* 선택된 것의 img.value를 가져옵니다.
+// ! return은 문자열 타입입니다.
+
+function nowImg(){
+  let nowLi = [];
+  let newImg = "";
+
+  for(let i=0; i<listPart.children.length; i++){
+    if(listPart.children[i].style.backgroundColor === "gray"){
+      nowLi.push(listPart.children[i].children[0].textContent);
+    }
+  }
+  // for(let j=0; j<nowImg.length; j++){
+  //   if(j === nowImg.length-1){
+  //     newImg += `${nowLi[j]}`
+  //   }
+  //   else{
+  //     newImg += `${nowLi[j]}, `
+  //   }
+  // }
+  newImg = nowLi.join();
+  console.log(nowLi);
+  console.log(newImg);
+  return newImg;
+}
+// !newImg 문자열 return에서 오류를 보여 보이지 않는 현상(해결)
+// * 로직을 긁어올 때 parseInt() 메소드를 빼지 않았음.
 
 
+//* 선택됐을 때 price(div[1])의 텍스트가 흰색으로 변함
 
-
+function textChange(){
+  for(let i=0; i<listPart.length; i++){
+    if(listPart.children[i].style.backgroundColor === "gray"){
+      listPart.children[i].children[1].style.color = "white"
+    } else {
+      listPart.children[i].children[1].style.color = "black"
+    }
+  }
+}
 
 
 
@@ -165,12 +201,14 @@ userInput.addEventListener('change', function(){
         submitBtnFunc();
       });
       // * input + enter작동하게 하기, 중복 이벤트 등록 
+      // ? 이벤트 핸들러를 한번만 불러오기위한 조건 : 인수를 똑 같이 만들어준다. 이때,  익명함수는 피하는 것이 좋으며 기명함수로 작성해보았다.
       userInput.addEventListener('change',function(){
         submitBtnFunc();
       });
-      userInput.addEventListener('keyup',function(e){
+      userInput.addEventListener('keyup',function enter(e){
         if(e.key === "Enter"){
           submitBtnFunc();
+          userInput.removeEventListener('keyup', enter);
         }
       });
     }
@@ -180,7 +218,7 @@ userInput.addEventListener('change', function(){
 })
 
 
-function submitBtnFunc(){
+function submitBtnFunc(e){
   let userValue = parseInt(userInput.value);
   if(userValue >= pushCPrice()){
     if(userValue === pushCPrice()){
@@ -188,8 +226,7 @@ function submitBtnFunc(){
       blurEventEnd();
     }else{
       // 잔돈 로직 시작
-      blurEvent(`${userValue - pushCPrice()} 원 잔돈이 있음`);
-      blurEventEnd();
+      changeBtnEvent(e);
     }
   } else {
     blurEvent("돈이 부족합니다.");
@@ -223,6 +260,42 @@ function blurEventEnd(){
       }, 500);
     }
   });
+}
+
+
+
+// * 잔돈 이벤트
+function changeBtnEvent(e){
+  blurDiv.style.zIndex = "5";
+  blurH1.textContent = `${nowImg()}을(를) 획득했습니다.`;
+  chaBtnAdd(e);
+  
+}
+// ! 잔돈 동적 버튼 생성과 삭제
+function chaBtnAdd(){
+  let createDiv = document.createElement('div');
+  createDiv.className = "btn";
+  createDiv.textContent = "잔돈!";
+  blurDiv.appendChild(createDiv);
+
+    createDiv.addEventListener('click', function(){
+      chaBtnRemove();
+      blurDiv.style.zIndex = "5";
+    });
+}
+
+function chaBtnRemove(){
+  console.log(blurDiv.lastChild);
+  blurDiv.remove(blurDiv.lastChild);
+}
+
+function changeEvent(){
+  const userValue1 = parseInt(userInput.value);
+blurH1.textContent = `${userValue1 - pushCPrice()} 원 잔돈이 있습니다.`;
+
+setTimeout(()=>{
+  blurEventEnd();
+},500)
 }
 
 
