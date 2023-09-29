@@ -1,18 +1,14 @@
-console.log('hello');
-
 const root = document.getElementById('root');
 const blurDiv = document.getElementById('blur');
 const blurH1 = document.querySelector('h1');
+const listPart = document.getElementById('listPart');
 
 
 
 // !! 원본 데이터 수정파트 --------------
 //* 여기서 수정하면  리스트가 생성됨
-const listPart = document.getElementById('listPart');
 const imgData = ["🤷‍♂️","🤷‍♀️","🤦‍♂️","🤦‍♀️","🙌","👍","😁","💕","😘","😒","❤","😊","😂","🤣","🤢","👌","🎁","💖","✔","✌"];
 const priceData = [300,3000,400,4000,200,2000,500,5000,600,6000,700,7000,800,8000,900,9000,100,1000,405,40000];
-
-
 
 // !li 자동 생성기 ------------------------------------------------
 // * class 선언---------------------------
@@ -111,6 +107,7 @@ ulTag.addEventListener('click',function(event){
     }
   }
 
+
 // !--------버튼 로직-------------------------
 
 const submitBtn = document.getElementsByClassName('submitBtn');
@@ -130,9 +127,11 @@ function pushCPrice(){
   let result = 0;
   
   // * 다중 선택된 것의 price를 가져오기
+  //* 선택됐을 때 price(div[1])의 텍스트가 흰색으로 변함
   for(let i=0; i<listPart.children.length; i++){
     if(listPart.children[i].style.backgroundColor === "gray"){
       currentPrice.push(parseInt(listPart.children[i].children[1].textContent));
+      
     }
   }
 
@@ -150,6 +149,36 @@ function pushCPrice(){
 
 
 //! 잔돈 비교 로직 ----------------------  
+
+//??? input 조건 생성 : 만약 값이 없다면 작동하지 않도록
+userInput.addEventListener('change', function(){
+  // 입력이 있을 때 이벤트가 발생
+  if(userInput.value.length > 0) {
+    if(isNaN(userInput.value)===true){
+      // 숫자로 변환 가능한지 여부 확인
+      userInput.placeholder = "숫자만 입력해주세요";
+      return;
+    } else {
+      userInput.placeholder = "값을 입력하셨습니다.";
+      // * submitBtn을 누르면 이벤트 발생
+      submitBtn[0].addEventListener('click',function(){
+        submitBtnFunc();
+      });
+      // * input + enter작동하게 하기, 중복 이벤트 등록 
+      userInput.addEventListener('change',function(){
+        submitBtnFunc();
+      });
+      userInput.addEventListener('keyup',function(e){
+        if(e.key === "Enter"){
+          submitBtnFunc();
+        }
+      });
+    }
+  } else {
+    alert("값을 입력해주세요")
+  }
+})
+
 
 function submitBtnFunc(){
   let userValue = parseInt(userInput.value);
@@ -197,34 +226,6 @@ function blurEventEnd(){
 }
 
 
-//??? input 조건 생성 : 만약 값이 없다면 작동하지 않도록
-userInput.addEventListener('change', function(){
-  // 입력이 있을 때 이벤트가 발생
-  if(userInput.value.length > 0) {
-    if(isNaN(userInput.value)===true){
-      // 숫자로 변환 가능한지 여부 확인
-      userInput.placeholder = "숫자만 입력해주세요";
-      return;
-    } else {
-      userInput.placeholder = "값을 입력하셨습니다.";
-      // * submitBtn을 누르면 이벤트 발생
-      submitBtn[0].addEventListener('click',function(){
-        submitBtnFunc();
-      });
-      // * input + enter작동하게 하기, 중복 이벤트 등록 
-      userInput.addEventListener('change',function(){
-        submitBtnFunc();
-      });
-      userInput.addEventListener('keyup',function(e){
-        if(e.key === "Enter"){
-          submitBtnFunc();
-        }
-      });
 
-    }
-  } else {
-    alert("값을 입력해주세요")
-  }
-})
 
 //??? 해야할 것 : 잔돈 버튼 생성
