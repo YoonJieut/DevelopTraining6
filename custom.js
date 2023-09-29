@@ -150,7 +150,7 @@ function pushCPrice(){
 
 
 //! 잔돈 비교 로직 ----------------------  
-//??? 해야할 것 : 잔돈 버튼 생성 및 
+ 
 function submitBtnFunc(){
   let userValue = parseInt(userInput.value);
   if(userValue >= pushCPrice()){
@@ -192,3 +192,8 @@ function blurEventEnd(){
     blurH1.textContent = "";
   });
 }
+
+
+//??? 해야할 것 : 잔돈 버튼 생성
+//??? input 조건 생성 : 만약 값이 없다면 작동하지 않도록
+
