@@ -112,7 +112,6 @@ ulTag.addEventListener('click',function(event){
 
 const submitBtn = document.getElementsByClassName('submitBtn');
 const userInput = document.getElementById('userInput');
-const numUserValue = parseInt(userInput.value);
 // console.log(submitBtn, userInput);
 
 //? currentTarget 과 target의 차이는?
@@ -291,22 +290,21 @@ function changeEvent(){
 }
 function changeBtnEvent(){
   let Btn = blurDiv.children[1];
+  console.log(Btn);
+  let userInput1 = parseInt(userInput.value);
 
   body.addEventListener('keyup',function keyUpEnter(e){
     if(e.key === "Enter"){
-      blurDiv.children[0].textContent = `잔돈 : ${numUserValue - pushCPrice()} 원`;
+      blurDiv.children[0].textContent = `잔돈 : ${userInput1 - pushCPrice()} 원`;
 
       blurDiv.removeChild(blurDiv.lastChild);
       body.removeEventListener('keyup', keyUpEnter);
       blurEventEnd();
     }
-    // Btn.addEventListener('click',function(){
-    //   blurDiv.children[0].textContent = `잔돈 : ${numUserValue - pushCPrice()} 원`;
-
-    //   blurDiv.removeChild(blurDiv.lastChild);
-    //   body.removeEventListener('keyup', keyUpEnter);
-    //   blurEventEnd();
-    // });
+    Btn.addEventListener('click',function(){
+      blurDiv.children[0].textContent = `잔돈 : ${userInput1 - pushCPrice()} 원`;
+      blurDiv.removeChild(blurDiv.lastChild);
+    });
   });
   
 }
