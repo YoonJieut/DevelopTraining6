@@ -112,6 +112,7 @@ ulTag.addEventListener('click',function(event){
 
 const submitBtn = document.getElementsByClassName('submitBtn');
 const userInput = document.getElementById('userInput');
+const numUserValue = parseInt(userInput.value);
 // console.log(submitBtn, userInput);
 
 //? currentTarget 과 target의 차이는?
@@ -226,7 +227,7 @@ function submitBtnFunc(e){
       blurEventEnd();
     }else{
       // 잔돈 로직 시작
-      changeBtnEvent(e);
+      changeEvent();
     }
   } else {
     blurEvent("돈이 부족합니다.");
@@ -263,10 +264,49 @@ function blurEventEnd(){
 }
 
 //??? 해야할 것 : 잔돈 버튼 생성
-function changeBtnEvent(e){
-  let userValue1 = parseInt(userInput.value);
-  blurEvent(`${userValue1 - pushCPrice()}원 잔돈입니다.`);
-  userInput.value = "";
-  blurEventEnd();
-};
+// function changeBtnEvent(e){
+//   let userValue1 = parseInt(userInput.value);
+//   blurEvent(`${userValue1 - pushCPrice()}원 잔돈입니다.`);
+//   userInput.value = "";
+//   blurEventEnd();
+// };
 
+// ! 잔돈 이벤트 작성
+// *1. blur event, text수정, 잔돈 버튼 추가
+// * 2 버튼 누를 시, 잔돈 표시와btn 삭제, blur이벤트 종료 대기
+
+
+function changeEvent(){
+  // *1. blur event, text수정, 잔돈 버튼 추가
+  blurEvent();
+
+  
+  blurDiv.children[0].textContent = `${nowImg()}을(를) 얻었습니다.`
+
+  let changeBtn = document.createElement('div');
+  changeBtn.classList.add('btn');
+  changeBtn.textContent = "반환 버튼";
+  blurDiv.appendChild(changeBtn);
+  setTimeout(()=>{changeBtnEvent()}, 1000);
+}
+function changeBtnEvent(){
+  let Btn = blurDiv.children[1];
+
+  body.addEventListener('keyup',function keyUpEnter(e){
+    if(e.key === "Enter"){
+      blurDiv.children[0].textContent = `잔돈 : ${numUserValue - pushCPrice()} 원`;
+
+      blurDiv.removeChild(blurDiv.lastChild);
+      body.removeEventListener('keyup', keyUpEnter);
+      blurEventEnd();
+    }
+    // Btn.addEventListener('click',function(){
+    //   blurDiv.children[0].textContent = `잔돈 : ${numUserValue - pushCPrice()} 원`;
+
+    //   blurDiv.removeChild(blurDiv.lastChild);
+    //   body.removeEventListener('keyup', keyUpEnter);
+    //   blurEventEnd();
+    // });
+  });
+  
+}
