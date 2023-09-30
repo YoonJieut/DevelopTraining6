@@ -62,7 +62,17 @@ h3 {
   font-weight: 300;
 }
 
+/* darkmode */
+.darkMode {
+  color : #fff;
+  background-color: #111;
+}
+.darkModeText {
+  color: #fff;
+}
 
+
+/* input 관련 */
 input {
   max-width: 80%;
   text-align: center;
@@ -96,7 +106,13 @@ input::placeholder {
 #blur h1 {
   z-index: -10;
 }
-
+#darkMode {
+  width: 70px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+  letter-spacing: 0;
+}
 
 /* listArea part ---------------- */
 #listArea {
@@ -135,7 +151,6 @@ input::placeholder {
   font-size: 80px;
 }
 #listArea > ul li div:nth-of-type(2) {
-  color: #222;
   font-size: 1.4rem;
 }
 #listArea > ul li div:nth-of-type(3) {

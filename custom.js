@@ -20,11 +20,6 @@ class testObj {
   }
 }
 
-// listData.push(new testObj(0,imgData[0],priceData[0]));
-// console.log(listData);
-// console.log(imgData);
-// console.log(priceData);
-
 // * 원본데이터를 토대로 객체 자동 생성하기 ---------------
 const _sellData = [];
 
@@ -305,6 +300,30 @@ function changeBtnEvent(){
       blurDiv.children[0].textContent = `잔돈 : ${userInput1 - pushCPrice()} 원`;
       blurDiv.removeChild(blurDiv.lastChild);
     });
-  });
-  
+  }); 
 }
+
+// ! 다크모드 추가
+// class를 조정하는 방식으로 진행
+// .darkmode가 없으면 추가, btn에게도 다크모드 추가
+const darkBtn = document.getElementById('darkMode');
+console.log(darkBtn);
+console.log(body);
+darkBtn.addEventListener('click',function(){
+  console.dir(body);
+  if( body.className === ""){
+    body.classList.add("darkMode");
+    for(let i=0; i<listPart.children.length; i++){
+      for(let j=0; j<3;j++){
+        listPart.children[i].children[j].classList.add("darkModeText");
+      }
+    }
+  }else {
+    body.classList.remove("darkMode");
+    for(let i=0; i<listPart.children.length; i++){
+      for(let j=0; j<3;j++){
+        listPart.children[i].children[j].classList.remove("darkModeText");
+      }
+    }
+  }
+});
