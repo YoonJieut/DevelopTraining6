@@ -26,17 +26,6 @@ const _sellData = [];
 for(let i = 0; i<imgData.length;i++){
   _sellData.push(new testObj(i+1, imgData[i],priceData[i]));
 }
-// ! push관련 오류 발견
-// * 해결! : 배열.push => 작성법 오류
-
-// ! foreach로 데이터 배열 생성 !! ---------
-// imgData.forEach((i)=>{
-//   _sellData.push(new testObj(i, imgData[i], priceData[i]))
-// })
-// ? foreach는 어떻게 동작원리 파악할 필요 있음.
-// console.log(_sellData);
-// console.log(_sellData[0].id);
-
 
 //* li안에 넣기
 const ulTag = document.getElementById('listPart')
@@ -47,29 +36,20 @@ for(let i=0; i<_sellData.length; i++){
     ulTag.children[i].appendChild(document.createElement('div'));
   }
 }
-  // ? queryselector가 잘 안됐다. 흠..
-// console.log(_sellData);
-// console.log(_sellData[0]);
-// console.log(_sellData[0].id);
-
 
 //* _sellData 배열의 정보를 li안의 div에 넣기-----------------
 //  * 1번 div는 img
 //  * 2번 div는 price
 //  * 3번 div는 id
-// console.dir(ulTag.children[0])
-// console.log(ulTag.children[0].children[0])
-// console.log(ulTag.children[0].children[1])
-// console.log(ulTag.children[0].children[2])
-// ulTag.children[0].children[0].innerText = _sellData[0].img
-// ulTag.children[0].children[1].innerText = _sellData[0].price
-// ulTag.children[0].children[2].textContent = _sellData[0]
 for(let i =0; i<_sellData.length; i++){
     ulTag.children[i].children[0].innerText = _sellData[i].img
     ulTag.children[i].children[1].innerText = _sellData[i].price
     ulTag.children[i].children[2].innerText = _sellData[i].id
 }
+
 // ? 여기서 더 개선할 수 있을까???
+
+
 
 //!!--------- li클릭 시 배경 변경 -----------------
 ulTag.addEventListener('click',function(event){
@@ -107,12 +87,6 @@ ulTag.addEventListener('click',function(event){
 
 const submitBtn = document.getElementsByClassName('submitBtn');
 const userInput = document.getElementById('userInput');
-// console.log(submitBtn, userInput);
-
-//? currentTarget 과 target의 차이는?
-//* currentTarget = 이벤트리스터가 달린 요소
-//* target = 실제 이벤트 발생 요소
-
 
 
 // * 배경색이 "gray"라면 string으로 currentPrice에 값을 넣고 각 값음 함침
@@ -148,14 +122,6 @@ function nowImg(){
       nowLi.push(listPart.children[i].children[0].textContent);
     }
   }
-  // for(let j=0; j<nowImg.length; j++){
-  //   if(j === nowImg.length-1){
-  //     newImg += `${nowLi[j]}`
-  //   }
-  //   else{
-  //     newImg += `${nowLi[j]}, `
-  //   }
-  // }
   newImg = nowLi.join();
   console.log(nowLi);
   console.log(newImg);
@@ -238,6 +204,7 @@ function blurEvent(text){
 // * blurDiv를 누르면 blurEvent 끝내기
 // ! enter 키 이벤트 등록하기 :
 //! keyup과 매개변수를 이용한다.
+// !! enter는 버그를 유발해 우선 지우기로 한다.
 const body = window.document.body;
 
 function blurEventEnd(){
@@ -245,37 +212,18 @@ function blurEventEnd(){
     blurDiv.style.zIndex = " -5";
     blurH1.textContent = "";
   });
-  // ! body에 enter event를 넣었으나 1초만에 바로 사라지는 모습이 관측됨.
-  // * setTimeout 0.8초 지연과 해당 이벤트를 한번만 작동하게 하는 것으로 해당 문제를 해결
-  body.addEventListener('keypress', function(e){
-    if(e.key === "Enter" && blurDiv.style.zIndex === "5"){
-      setTimeout(()=>{
-      blurDiv.style.zIndex = " -5";
-        blurH1.textContent = "";
-      }, 500);
-    }
-  });
 }
 
-//??? 해야할 것 : 잔돈 버튼 생성
-// function changeBtnEvent(e){
-//   let userValue1 = parseInt(userInput.value);
-//   blurEvent(`${userValue1 - pushCPrice()}원 잔돈입니다.`);
-//   userInput.value = "";
-//   blurEventEnd();
-// };
-
 // ! 잔돈 이벤트 작성
-// *1. blur event, text수정, 잔돈 버튼 추가
+// * 1. blur event, text수정, 잔돈 버튼 추가
 // * 2 버튼 누를 시, 잔돈 표시와btn 삭제, blur이벤트 종료 대기
 
 
 function changeEvent(){
   // *1. blur event, text수정, 잔돈 버튼 추가
   blurEvent();
-
-  
   blurDiv.children[0].textContent = `${nowImg()}을(를) 얻었습니다.`
+
 
   let changeBtn = document.createElement('div');
   changeBtn.classList.add('btn');
@@ -283,6 +231,8 @@ function changeEvent(){
   blurDiv.appendChild(changeBtn);
   setTimeout(()=>{changeBtnEvent()}, 1000);
 }
+
+
 function changeBtnEvent(){
   let Btn = blurDiv.children[1];
   console.log(Btn);
@@ -307,8 +257,7 @@ function changeBtnEvent(){
 // class를 조정하는 방식으로 진행
 // .darkmode가 없으면 추가, btn에게도 다크모드 추가
 const darkBtn = document.getElementById('darkMode');
-console.log(darkBtn);
-console.log(body);
+
 darkBtn.addEventListener('click',function(){
   console.dir(body);
   if( body.className === ""){
